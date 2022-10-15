@@ -31,9 +31,7 @@ spawn(
 ).on('close', function(code) {
   if (code !== 0) {
     console.error('Danger failed');
-  } else {
-    console.log('Danger passed');
-  }
+  } else {}
 
   process.exit(code);
 });
