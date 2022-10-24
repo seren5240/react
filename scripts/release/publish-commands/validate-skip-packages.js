@@ -35,10 +35,6 @@ const run = async ({cwd, packages, skipPackages}) => {
         // Do we depend on a version of the package that has not been published to NPM?
         const info = await execRead(`npm view ${dependency}@${version}`);
         if (!info) {
-          console.log(
-            theme`{error Package} {package ${name}} {error depends on an unpublished skipped package}`,
-            theme`{package ${dependency}}@{version ${version}}`
-          );
           process.exit(1);
         }
       }

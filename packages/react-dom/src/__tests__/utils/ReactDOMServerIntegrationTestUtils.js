@@ -86,14 +86,8 @@ module.exports = function(initModules) {
         }
       }
       if (filteredWarnings.length !== count) {
-        console.log(
-          `We expected ${count} warning(s), but saw ${filteredWarnings.length} warning(s).`,
-        );
         if (filteredWarnings.length > 0) {
-          console.log(`We saw these warnings:`);
-          for (let i = 0; i < filteredWarnings.length; i++) {
-            console.log(...filteredWarnings[i]);
-          }
+          for (let i = 0; i < filteredWarnings.length; i++) {}
         }
         if (__DEV__) {
           expect(console.error).toHaveBeenCalledTimes(count);

@@ -24,29 +24,13 @@ async function main() {
   await confirm('Have you stopped all NPM DEV scripts?', () => {
     const packagesPath = relative(process.cwd(), join(__dirname, 'packages'));
 
-    console.log('Stop all NPM DEV scripts in the following directories:');
-    console.log(
-      chalk.bold('  ' + join(packagesPath, 'react-devtools-core')),
-      chalk.gray('(start:backend, start:standalone)')
-    );
-    console.log(
-      chalk.bold('  ' + join(packagesPath, 'react-devtools-inline')),
-      chalk.gray('(start)')
-    );
-
     const buildAndTestScriptPath = join(__dirname, 'build-and-test.js');
     const pathToPrint = relative(process.cwd(), buildAndTestScriptPath);
-
-    console.log('\nThen restart this release step:');
-    console.log(chalk.bold.green('  ' + pathToPrint));
   });
 
   await confirm('Have you run the prepare-release script?', () => {
     const prepareReleaseScriptPath = join(__dirname, 'prepare-release.js');
     const pathToPrint = relative(process.cwd(), prepareReleaseScriptPath);
-
-    console.log('Begin by running the prepare-release script:');
-    console.log(chalk.bold.green('  ' + pathToPrint));
   });
 
   const archivePath = await archiveGitRevision();
@@ -64,9 +48,6 @@ async function main() {
 async function archiveGitRevision() {
   const desktopPath = join(homedir(), 'Desktop');
   const archivePath = join(desktopPath, 'DevTools.tgz');
-
-  console.log(`Creating git archive at ${chalk.dim(archivePath)}`);
-  console.log('');
 
   if (!DRY_RUN) {
     await exec(`git archive main | gzip > ${archivePath}`, {cwd: ROOT_PATH});
@@ -92,21 +73,6 @@ async function buildAndTestExtensions() {
       estimate: 60000,
     }
   );
-
-  console.log('');
-  console.log(`Extensions have been build for Chrome, Edge, and Firefox.`);
-  console.log('');
-  console.log('Smoke test each extension before continuing:');
-  console.log(`  ${chalk.bold.green('cd ' + extensionsPackagePath)}`);
-  console.log('');
-  console.log(`  ${chalk.dim('# Test Chrome extension')}`);
-  console.log(`  ${chalk.bold.green('yarn test:chrome')}`);
-  console.log('');
-  console.log(`  ${chalk.dim('# Test Edge extension')}`);
-  console.log(`  ${chalk.bold.green('yarn test:edge')}`);
-  console.log('');
-  console.log(`  ${chalk.dim('# Firefox Chrome extension')}`);
-  console.log(`  ${chalk.bold.green('yarn test:firefox')}`);
 
   await confirmContinue();
 }
@@ -135,18 +101,6 @@ async function buildAndTestStandalonePackage() {
     'index.html'
   );
 
-  console.log('');
-  console.log(
-    `Test the ${chalk.bold('react-devtools-core')} target before continuing:`
-  );
-  console.log(`  ${chalk.bold.green('cd ' + standalonePackagePath)}`);
-  console.log(`  ${chalk.bold.green('yarn start')}`);
-  console.log('');
-  console.log(
-    'The following fixture can be useful for testing Safari integration:'
-  );
-  console.log(`  ${chalk.dim(safariFixturePath)}`);
-
   await confirmContinue();
 }
 
@@ -171,13 +125,6 @@ async function buildAndTestInlinePackage() {
 
   const shellPackagePath = join(ROOT_PATH, 'packages', 'react-devtools-shell');
 
-  console.log('');
-  console.log(`Built ${chalk.bold('react-devtools-inline')} target.`);
-  console.log('');
-  console.log('Test this build before continuing:');
-  console.log(`  ${chalk.bold.green('cd ' + shellPackagePath)}`);
-  console.log(`  ${chalk.bold.green('yarn start')}`);
-
   await confirmContinue();
 }
 
@@ -195,8 +142,6 @@ async function downloadLatestReactBuild() {
     }
   );
 
-  console.log('');
-
   const {commit} = await inquirer.prompt([
     {
       type: 'input',
@@ -205,7 +150,6 @@ async function downloadLatestReactBuild() {
       default: 'main',
     },
   ]);
-  console.log('');
 
   const downloadScriptPath = join(
     releaseScriptPath,
@@ -229,19 +173,12 @@ async function downloadLatestReactBuild() {
 
   const buildID = match[1];
 
-  console.log('');
-  console.log(`Downloaded artifacts for CI build ${chalk.bold(buildID)}.`);
-
   return buildID;
 }
 
 function printFinalInstructions() {
   const publishReleaseScriptPath = join(__dirname, 'publish-release.js');
   const pathToPrint = relative(process.cwd(), publishReleaseScriptPath);
-
-  console.log('');
-  console.log('Continue by running the publish-release script:');
-  console.log(chalk.bold.green('  ' + pathToPrint));
 }
 
 main();

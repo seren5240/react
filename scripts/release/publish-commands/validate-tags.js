@@ -21,40 +21,20 @@ const run = async ({cwd, packages, tags}) => {
   const isExperimentalVersion = version.indexOf('experimental') !== -1;
   if (version.indexOf('-') !== -1) {
     if (tags.includes('latest')) {
-      if (isExperimentalVersion) {
-        console.log(
-          theme`{error Experimental release} {version ${version}} {error cannot be tagged as} {tag latest}`
-        );
-      } else {
-        console.log(
-          theme`{error Next release} {version ${version}} {error cannot be tagged as} {tag latest}`
-        );
-      }
+      if (isExperimentalVersion) {} else {}
       process.exit(1);
     }
     if (tags.includes('next') && isExperimentalVersion) {
-      console.log(
-        theme`{error Experimental release} {version ${version}} {error cannot be tagged as} {tag next}`
-      );
       process.exit(1);
     }
     if (tags.includes('experimental') && !isExperimentalVersion) {
-      console.log(
-        theme`{error Next release} {version ${version}} {error cannot be tagged as} {tag experimental}`
-      );
       process.exit(1);
     }
   } else {
     if (!tags.includes('latest')) {
-      console.log(
-        theme`{error Stable release} {version ${version}} {error must always be tagged as} {tag latest}`
-      );
       process.exit(1);
     }
     if (tags.includes('experimental')) {
-      console.log(
-        theme`{error Stable release} {version ${version}} {error cannot be tagged as} {tag experimental}`
-      );
       process.exit(1);
     }
   }

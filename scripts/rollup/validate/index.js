@@ -69,16 +69,12 @@ async function lint(eslint, filepaths) {
     results.some(result => result.errorCount > 0 || result.warningCount > 0)
   ) {
     process.exitCode = 1;
-    console.log(`Lint failed`);
     const formatter = await eslint.loadFormatter('stylish');
     const resultText = formatter.format(results);
-    console.log(resultText);
   }
 }
 
 async function lintEverything() {
-  console.log(`Linting build artifacts...`);
-
   const allFilepaths = await glob('build/**/*.js');
 
   const pathsByFormat = new Map();

@@ -64,9 +64,7 @@ export default class Clock extends PureComponent {
     }
   }
 
-  componentDidUpdate() {
-    console.log('componentDidUpdate()', this.faceRef.current);
-  }
+  componentDidUpdate() {}
 
   componentWillUnmount() {
     this.faceRef.current.removeEventListener('click', this.handleClick);

@@ -580,10 +580,6 @@ describe('console', () => {
     const root = ReactDOMClient.createRoot(container);
 
     function App() {
-      console.log(
-        'CALL',
-        global.__REACT_DEVTOOLS_HIDE_CONSOLE_LOGS_IN_STRICT_MODE__,
-      );
       fakeConsole.log('log');
       fakeConsole.warn('warn');
       fakeConsole.error('error');

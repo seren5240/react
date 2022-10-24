@@ -43,11 +43,8 @@ webpack(
     }
     const info = stats.toJson();
     if (stats.hasErrors()) {
-      console.log('Finished running webpack with errors.');
       info.errors.forEach(e => console.error(e));
       process.exit(1);
-    } else {
-      console.log('Finished running webpack.');
-    }
+    } else {}
   }
 );

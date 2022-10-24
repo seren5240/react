@@ -24,9 +24,6 @@ async function main() {
   await confirm('Have you run the build-and-test script?', () => {
     const buildAndTestScriptPath = join(__dirname, 'build-and-test.js');
     const pathToPrint = relative(process.cwd(), buildAndTestScriptPath);
-
-    console.log('Begin by running the build-and-test script:');
-    console.log(chalk.bold.green('  ' + pathToPrint));
   });
 
   const {archivePath, buildID} = readSavedBuildMetadata();
@@ -38,24 +35,7 @@ async function main() {
   await printFinalInstructions(buildID, archivePath);
 }
 
-async function printFinalInstructions(buildID, archivePath) {
-  console.log('');
-  console.log(
-    'You are now ready to publish the extension to Chrome, Edge, and Firefox:'
-  );
-  console.log(
-    `  ${chalk.blue.underline(
-      'https://fburl.com/publish-react-devtools-extensions'
-    )}`
-  );
-  console.log('');
-  console.log('When publishing to Firefox, remember the following:');
-  console.log(`  Build id: ${chalk.bold(buildID)}`);
-  console.log(`  Git archive: ${chalk.bold(archivePath)}`);
-  console.log('');
-  console.log('Also consider syncing this release to Facebook:');
-  console.log(`  ${chalk.bold.green('js1 upgrade react-devtools')}`);
-}
+async function printFinalInstructions(buildID, archivePath) {}
 
 async function publishToNPM() {
   const {otp} = await inquirer.prompt([
@@ -65,8 +45,6 @@ async function publishToNPM() {
       message: 'Please provide an NPM two-factor auth token:',
     },
   ]);
-
-  console.log('');
 
   if (!otp) {
     console.error(chalk.red(`Invalid OTP provided: "${chalk.bold(otp)}"`));
@@ -84,20 +62,10 @@ async function publishToNPM() {
     // But for now the easiest way is just to ask if this is expected.
     const info = await execRead(`npm view ${npmPackage}@${version}`);
     if (info) {
-      console.log('');
-      console.log(
-        `${npmPackage} version ${chalk.bold(
-          version
-        )} has already been published.`
-      );
-
       await confirm('Is this expected?');
     }
 
-    if (DRY_RUN) {
-      console.log(`Publishing package ${chalk.bold(npmPackage)}`);
-      console.log(chalk.dim(`  npm publish --otp=${otp}`));
-    } else {
+    if (DRY_RUN) {} else {
       const publishPromise = exec(`npm publish --otp=${otp}`, {
         cwd: packagePath,
       });

@@ -70,23 +70,13 @@ checkBrowsers(paths.appPath, isInteractive)
   .then(
     ({stats, previousFileSizes, warnings}) => {
       if (warnings.length) {
-        console.log(chalk.yellow('Compiled with warnings.\n'));
-        console.log(warnings.join('\n\n'));
-        console.log(
-          '\nSearch for the ' +
-            chalk.underline(chalk.yellow('keywords')) +
-            ' to learn more about each warning.'
-        );
         console.log(
           'To ignore, add ' +
             chalk.cyan('// eslint-disable-next-line') +
             ' to the line before.\n'
         );
-      } else {
-        console.log(chalk.green('Compiled successfully.\n'));
-      }
+      } else {}
 
-      console.log('File sizes after gzip:\n');
       printFileSizesAfterBuild(
         stats,
         previousFileSizes,
@@ -94,7 +84,6 @@ checkBrowsers(paths.appPath, isInteractive)
         WARN_AFTER_BUNDLE_GZIP_SIZE,
         WARN_AFTER_CHUNK_GZIP_SIZE
       );
-      console.log();
 
       const appPackage = require(paths.appPackageJson);
       const publicUrl = paths.publicUrlOrPath;
@@ -111,30 +100,20 @@ checkBrowsers(paths.appPath, isInteractive)
     err => {
       const tscCompileOnError = process.env.TSC_COMPILE_ON_ERROR === 'true';
       if (tscCompileOnError) {
-        console.log(
-          chalk.yellow(
-            'Compiled with the following type errors (you may want to check these before deploying your app):\n'
-          )
-        );
         printBuildError(err);
       } else {
-        console.log(chalk.red('Failed to compile.\n'));
         printBuildError(err);
         process.exit(1);
       }
     }
   )
   .catch(err => {
-    if (err && err.message) {
-      console.log(err.message);
-    }
+    if (err && err.message) {}
     process.exit(1);
   });
 
 // Create the production build and print the deployment instructions.
 function build(previousFileSizes) {
-  console.log('Creating an optimized production build...');
-
   const compiler = webpack(config);
   return new Promise((resolve, reject) => {
     compiler.run((err, stats) => {
@@ -181,12 +160,6 @@ function build(previousFileSizes) {
           w => !/Failed to parse source map/.test(w)
         );
         if (filteredWarnings.length) {
-          console.log(
-            chalk.yellow(
-              '\nTreating warnings as errors because process.env.CI = true.\n' +
-                'Most CI servers set it automatically.\n'
-            )
-          );
           return reject(new Error(filteredWarnings.join('\n\n')));
         }
       }

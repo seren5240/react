@@ -266,7 +266,6 @@ function validateOptions() {
   }
 
   if (!success) {
-    console.log(''); // Extra newline.
     process.exit(1);
   }
 }
@@ -350,7 +349,6 @@ function getEnvars() {
 
 function main() {
   if (argv.deprecated) {
-    console.log(chalk.red(`\nPlease run: \`${argv.deprecated}\` instead.\n`));
     return;
   }
 
@@ -362,21 +360,10 @@ function main() {
 
   // Print the full command we're actually running.
   const command = `$ ${env.join(' ')} node ${args.join(' ')}`;
-  console.log(chalk.dim(command));
-
-  // Print the release channel and project we're running for quick confirmation.
-  console.log(
-    chalk.blue(
-      `\nRunning tests for ${argv.project} (${argv.releaseChannel})...`
-    )
-  );
 
   // Print a message that the debugger is starting just
   // for some extra feedback when running the debugger.
-  if (argv.debug) {
-    console.log(chalk.green('\nStarting debugger...'));
-    console.log(chalk.green('Open chrome://inspect and press "inspect"\n'));
-  }
+  if (argv.debug) {}
 
   // Run Jest.
   const jest = spawn('node', args, {

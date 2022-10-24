@@ -8,9 +8,7 @@ import {store} from '../store';
 import ThemeContext from './shared/ThemeContext';
 import Clock from './shared/Clock';
 
-store.subscribe(() => {
-  console.log('Counter:', store.getState());
-});
+store.subscribe(() => {});
 
 class AboutSection extends Component {
   componentDidMount() {

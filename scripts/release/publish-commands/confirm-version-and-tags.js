@@ -14,17 +14,7 @@ const run = async ({cwd, packages, tags, ci}) => {
   if (tags.length === 0) {
     console.error('Expected at least one tag.');
     process.exit(1);
-  } else if (tags.length === 1) {
-    console.log(
-      theme`{spinnerSuccess ✓} You are about the publish the following packages under the tag {tag ${tags}}:`
-    );
-  } else {
-    console.log(
-      theme`{spinnerSuccess ✓} You are about the publish the following packages under the tags {tag ${tags.join(
-        ', '
-      )}}:`
-    );
-  }
+  } else if (tags.length === 1) {} else {}
 
   for (let i = 0; i < packages.length; i++) {
     const packageName = packages[i];
@@ -35,9 +25,6 @@ const run = async ({cwd, packages, tags, ci}) => {
       'package.json'
     );
     const packageJSON = await readJson(packageJSONPath);
-    console.log(
-      theme`• {package ${packageName}} {version ${packageJSON.version}}`
-    );
   }
 
   if (!ci) {

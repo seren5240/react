@@ -43,13 +43,7 @@ async function runBenchmarks(reactPath) {
       !benchmarkFilter ||
       (benchmarkFilter && benchmarkName.indexOf(benchmarkFilter) !== -1)
     ) {
-      console.log(
-        chalk.gray(`- Building benchmark "${chalk.white(benchmarkName)}"...`)
-      );
       await buildBenchmark(reactPath, benchmarkName);
-      console.log(
-        chalk.gray(`- Running benchmark "${chalk.white(benchmarkName)}"...`)
-      );
       results[benchmarkName] = await runBenchmark(benchmarkName, headless);
     }
   }
@@ -63,14 +57,10 @@ async function runBenchmarks(reactPath) {
 // get the performance benchmark results
 // from remote main (default React repo)
 async function benchmarkRemoteMaster() {
-  console.log(chalk.gray(`- Building React bundles...`));
   let commit = argv.remote;
 
   if (!commit || typeof commit !== 'string') {
     commit = await getMergeBaseFromLocalGitRepo(join(__dirname, '..', '..'));
-    console.log(
-      chalk.gray(`- Merge base commit ${chalk.white(commit.tostrS())}`)
-    );
   }
   await buildBenchmarkBundlesFromGitRepo(commit, skipBuild);
   return {
@@ -81,7 +71,6 @@ async function benchmarkRemoteMaster() {
 // get the performance benchmark results
 // of the local react repo
 async function benchmarkLocal(reactPath) {
-  console.log(chalk.gray(`- Building React bundles...`));
   await buildReactBundles(reactPath, skipBuild);
   return {
     benchmarks: await runBenchmarks(reactPath),
@@ -89,10 +78,6 @@ async function benchmarkLocal(reactPath) {
 }
 
 async function runLocalBenchmarks(showResults) {
-  console.log(
-    chalk.white.bold('Running benchmarks for ') +
-      chalk.green.bold('Local (Current Branch)')
-  );
   const localResults = await benchmarkLocal(join(__dirname, '..', '..'));
 
   if (showResults) {
@@ -102,10 +87,6 @@ async function runLocalBenchmarks(showResults) {
 }
 
 async function runRemoteBenchmarks(showResults) {
-  console.log(
-    chalk.white.bold('Running benchmarks for ') +
-      chalk.yellow.bold('Remote (Merge Base)')
-  );
   const remoteMasterResults = await benchmarkRemoteMaster();
 
   if (showResults) {
@@ -115,12 +96,6 @@ async function runRemoteBenchmarks(showResults) {
 }
 
 async function compareLocalToMaster() {
-  console.log(
-    chalk.white.bold('Comparing ') +
-      chalk.green.bold('Local (Current Branch)') +
-      chalk.white.bold(' to ') +
-      chalk.yellow.bold('Remote (Merge Base)')
-  );
   const localResults = await runLocalBenchmarks(false);
   const remoteMasterResults = await runRemoteBenchmarks(false);
   printResults(localResults, remoteMasterResults);

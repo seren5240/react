@@ -272,36 +272,21 @@ function createPanelIfReactLoaded() {
 
             if (__DEBUG__) {
               debugID = debugIDCounter++;
-              console.log(`[main] fetchFromNetworkCache(${debugID})`, url);
             }
 
             chrome.devtools.network.getHAR(harLog => {
               for (let i = 0; i < harLog.entries.length; i++) {
                 const entry = harLog.entries[i];
                 if (url === entry.request.url) {
-                  if (__DEBUG__) {
-                    console.log(
-                      `[main] fetchFromNetworkCache(${debugID}) Found matching URL in HAR`,
-                      url,
-                    );
-                  }
+                  if (__DEBUG__) {}
 
                   entry.getContent(content => {
                     if (content) {
-                      if (__DEBUG__) {
-                        console.log(
-                          `[main] fetchFromNetworkCache(${debugID}) Content retrieved`,
-                        );
-                      }
+                      if (__DEBUG__) {}
 
                       resolve(content);
                     } else {
-                      if (__DEBUG__) {
-                        console.log(
-                          `[main] fetchFromNetworkCache(${debugID}) Invalid content returned by getContent()`,
-                          content,
-                        );
-                      }
+                      if (__DEBUG__) {}
 
                       // Edge case where getContent() returned null; fall back to fetch.
                       fetchFromPage(url, resolve, reject);
@@ -312,11 +297,7 @@ function createPanelIfReactLoaded() {
                 }
               }
 
-              if (__DEBUG__) {
-                console.log(
-                  `[main] fetchFromNetworkCache(${debugID}) No cached request found in getHAR()`,
-                );
-              }
+              if (__DEBUG__) {}
 
               // No matching URL found; fall back to fetch.
               fetchFromPage(url, resolve, reject);
@@ -324,9 +305,7 @@ function createPanelIfReactLoaded() {
           };
 
           const fetchFromPage = (url, resolve, reject) => {
-            if (__DEBUG__) {
-              console.log('[main] fetchFromPage()', url);
-            }
+            if (__DEBUG__) {}
 
             function onPortMessage({payload, source}) {
               if (source === 'react-devtools-content-script') {

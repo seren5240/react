@@ -106,7 +106,6 @@ function printResults(localResults, remoteMasterResults) {
   }
   const table = new Table({head});
   addBenchmarkResults(table, localResults, remoteMasterResults);
-  console.log(table.toString());
 }
 
 module.exports = printResults;

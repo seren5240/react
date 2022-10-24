@@ -54,11 +54,5 @@ expect.extend({
 beforeEach(() => (numExpectations = 0));
 
 jasmine.currentEnv_.addReporter({
-  specDone: spec => {
-    console.log(
-      `EQUIVALENCE: ${spec.description}, ` +
-        `status: ${spec.status}, ` +
-        `numExpectations: ${numExpectations}`
-    );
-  },
+  specDone: spec => {},
 });

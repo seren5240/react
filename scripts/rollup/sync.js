@@ -10,10 +10,7 @@ const RELATIVE_RN_OSS_PATH = 'xplat/js/react-native-github/Libraries/Renderer/';
 const RELATIVE_WWW_PATH = 'html/shared/react/';
 
 async function doSync(buildPath, destPath) {
-  console.log(`${chalk.bgYellow.black(' SYNCING ')} React to ${destPath}`);
-
   await asyncCopyTo(buildPath, destPath);
-  console.log(`${chalk.bgGreen.black(' SYNCED ')} React to ${destPath}`);
 }
 
 async function syncReactDom(buildPath, wwwPath) {

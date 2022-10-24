@@ -101,12 +101,10 @@ describe('DebugTracing', () => {
   // @gate experimental && build === 'development' && enableDebugTracing && enableCPUSuspense
   it('should log sync render with CPU suspense', () => {
     function Example() {
-      console.log('<Example/>');
       return null;
     }
 
     function Wrapper({children}) {
-      console.log('<Wrapper/>');
       return children;
     }
 
@@ -181,12 +179,10 @@ describe('DebugTracing', () => {
   // @gate experimental && build === 'development' && enableDebugTracing && enableCPUSuspense
   it('should log concurrent render with CPU suspense', () => {
     function Example() {
-      console.log('<Example/>');
       return null;
     }
 
     function Wrapper({children}) {
-      console.log('<Wrapper/>');
       return children;
     }
 
@@ -355,7 +351,6 @@ describe('DebugTracing', () => {
   // @gate experimental && build === 'development' && enableDebugTracing
   it('should log when user code logs', () => {
     function Example() {
-      console.log('Hello from user code');
       return null;
     }
 

@@ -81,7 +81,6 @@ async function runESLint({onlyChanged, ...options}) {
     onlyChanged,
     options
   );
-  console.log(output);
   return errorCount === 0 && warningCount === 0;
 }
 

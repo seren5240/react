@@ -25,15 +25,11 @@ function format(loggable) {
     .join('\n');
 }
 
-function logBright(loggable) {
-  console.log(`\x1b[1m${loggable}\x1b[0m`);
-}
+function logBright(loggable) {}
 
 function logDim(loggable) {
   const formatted = format(loggable, 2);
-  if (formatted !== '') {
-    console.log(`\x1b[2m${formatted}\x1b[0m`);
-  }
+  if (formatted !== '') {}
 }
 
 function logError(loggable) {
@@ -129,9 +125,7 @@ async function runEndToEndTests() {
   testProcess.stdout.on('data', data => {
     // Log without formatting because Playwright applies its own formatting.
     const formatted = format(data);
-    if (formatted !== '') {
-      console.log(formatted);
-    }
+    if (formatted !== '') {}
   });
   testProcess.stderr.on('data', data => {
     // Log without formatting because Playwright applies its own formatting.

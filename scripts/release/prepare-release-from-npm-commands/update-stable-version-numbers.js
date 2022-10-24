@@ -88,11 +88,7 @@ const run = async ({cwd, packages, version}, versionsMap) => {
   const printDependencies = (maybeDependency, label) => {
     if (maybeDependency) {
       for (let dependencyName in maybeDependency) {
-        if (packages.includes(dependencyName)) {
-          console.log(
-            theme`• {package ${dependencyName}} {version ${maybeDependency[dependencyName]}} {dimmed ${label}}`
-          );
-        }
+        if (packages.includes(dependencyName)) {}
       }
     }
   };
@@ -100,11 +96,6 @@ const run = async ({cwd, packages, version}, versionsMap) => {
     const packageName = packages[i];
     const packageJSONPath = join(nodeModulesPath, packageName, 'package.json');
     const packageJSON = await readJson(packageJSONPath);
-    console.log(
-      theme`\n{package ${packageName}} {version ${versionsMap.get(
-        packageName
-      )}}`
-    );
     printDependencies(packageJSON.dependencies, 'dependency');
     printDependencies(packageJSON.peerDependencies, 'peer');
   }
@@ -163,10 +154,6 @@ const run = async ({cwd, packages, version}, versionsMap) => {
     });
   }
   writeFileSync(diffPath, diff, {cwd});
-  console.log(theme.header(`\n${numFilesModified} files have been updated.`));
-  console.log(
-    theme`A full diff is available at {path ${relative(cwd, diffPath)}}.`
-  );
   await confirm('Do the changes above look correct?');
 
   clear();

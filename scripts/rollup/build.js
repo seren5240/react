@@ -600,20 +600,16 @@ async function createBundle(bundle, bundleType) {
     watcher.on('event', async event => {
       switch (event.code) {
         case 'BUNDLE_START':
-          console.log(`${chalk.bgYellow.black(' BUILDING ')} ${logKey}`);
           break;
         case 'BUNDLE_END':
-          console.log(`${chalk.bgGreen.black(' COMPLETE ')} ${logKey}\n`);
           break;
         case 'ERROR':
         case 'FATAL':
-          console.log(`${chalk.bgRed.black(' OH NOES! ')} ${logKey}\n`);
           handleRollupError(event.error);
           break;
       }
     });
   } else {
-    console.log(`${chalk.bgYellow.black(' BUILDING ')} ${logKey}`);
     try {
       const result = await rollup.rollup(rollupConfig);
       await result.write(rollupOutputOptions);
@@ -622,7 +618,6 @@ async function createBundle(bundle, bundleType) {
       handleRollupError(error);
       throw error;
     }
-    console.log(`${chalk.bgGreen.black(' COMPLETE ')} ${logKey}\n`);
   }
 }
 
@@ -749,7 +744,6 @@ async function buildEverything() {
     await Sync.syncReactDom('build/facebook-www', syncWWWPath);
   }
 
-  console.log(Stats.printResults());
   if (!forcePrettyOutput) {
     Stats.saveResults();
   }

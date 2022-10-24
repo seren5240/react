@@ -1227,7 +1227,7 @@ describe('ReactDOMComponent', () => {
           <source
             src="http://example.org/video"
             type="video/mp4"
-            onError={e => console.log('onError called')}
+            onError={e => {}}
           />
         </video>,
         container,
@@ -1478,8 +1478,8 @@ describe('ReactDOMComponent', () => {
         <svg>
           <image
             xlinkHref="http://example.org/image"
-            onError={e => console.log('onError called')}
-            onLoad={e => console.log('onLoad called')}
+            onError={e => {}}
+            onLoad={e => {}}
           />
         </svg>,
         container,

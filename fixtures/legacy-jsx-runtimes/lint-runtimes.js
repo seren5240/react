@@ -29,7 +29,6 @@ const esLints = {
 // Performs sanity checks on bundles *built* by Rollup.
 // Helps catch Rollup regressions.
 async function lint(folder) {
-  console.log(`Linting ` + folder);
   const eslint = esLints.cjs;
 
   const results = await eslint.lintFiles([
@@ -42,15 +41,12 @@ async function lint(folder) {
     results.some(result => result.errorCount > 0 || result.warningCount > 0)
   ) {
     process.exitCode = 1;
-    console.log(`Failed`);
     const formatter = await eslint.loadFormatter('stylish');
     const resultText = formatter.format(results);
-    console.log(resultText);
   }
 }
 
 async function lintEverything() {
-  console.log(`Linting known bundles...`);
   await lint('react-14');
   await lint('react-15');
   await lint('react-16');

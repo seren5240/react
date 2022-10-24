@@ -81,7 +81,6 @@ ${disclaimer}
 
   if (newConfig !== oldConfig) {
     fs.writeFileSync(configFile, newConfig);
-    console.log(chalk.dim('Wrote a Flow config to ' + configFile));
   }
 }
 
