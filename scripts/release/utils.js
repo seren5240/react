@@ -37,7 +37,6 @@ const confirm = async message => {
   const confirmation = await prompt(theme`\n{caution ${message}} (y/N) `);
   prompt.done();
   if (confirmation !== 'y' && confirmation !== 'Y') {
-    console.log(theme`\n{caution Release cancelled.}`);
     process.exit(0);
   }
 };
@@ -162,7 +161,6 @@ const handleError = error => {
   const message = error.message.trim().replace(/\n +/g, '\n');
   const stack = error.stack.replace(error.message, '');
 
-  console.log(theme`{error ${message}}\n\n{path ${stack}}`);
   process.exit(1);
 };
 
@@ -192,7 +190,6 @@ const printDiff = (path, beforeContents, afterContents) => {
       }
     })
     .filter(line => line);
-  console.log(coloredLines.join('\n'));
   return patch;
 };
 

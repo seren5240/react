@@ -60,10 +60,6 @@ async function runFlow(renderer, args) {
       fs.utimesSync(destPath, srcStat.atime, srcStat.mtime);
     }
 
-    console.log(
-      'Running Flow on the ' + chalk.yellow(renderer) + ' renderer...',
-    );
-
     spawn(cmd, args, {
       // Allow colors to pass through:
       stdio: 'inherit',
@@ -72,12 +68,8 @@ async function runFlow(renderer, args) {
         console.error(
           'Flow failed for the ' + chalk.red(renderer) + ' renderer',
         );
-        console.log();
         process.exit(code);
       } else {
-        console.log(
-          'Flow passed for the ' + chalk.green(renderer) + ' renderer',
-        );
         resolve();
       }
     });

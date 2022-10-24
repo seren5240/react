@@ -13,13 +13,7 @@ const run = async ({cwd, packages, skipPackages, tags}) => {
 
   clear();
 
-  console.log(
-    theme`{spinnerSuccess ✓} The following packages will not be published as part of this release`
-  );
-
-  skipPackages.forEach(packageName => {
-    console.log(theme`• {package ${packageName}}`);
-  });
+  skipPackages.forEach(packageName => {});
 
   await confirm('Do you want to proceed?');
 

@@ -23,15 +23,6 @@ const version = process.argv[2];
 const shouldReplaceBuild = !!argv.replaceBuild;
 
 async function downloadRegressionBuild() {
-  console.log(chalk.bold.white(`Downloading React v${version}\n`));
-
-  // Make build directory for temporary modules we're going to download
-  // from NPM
-  console.log(
-    chalk.white(
-      `Make Build directory at ${chalk.underline.blue(regressionBuildPath)}\n`
-    )
-  );
   await exec(`mkdir ${regressionBuildPath}`);
 
   // Install all necessary React packages that have the same version
@@ -55,14 +46,6 @@ async function downloadRegressionBuild() {
     (str, name) => `${str} ${join(buildPath, name)}`,
     ''
   );
-  console.log(
-    chalk.white(
-      `Removing ${removePackagesStr
-        .split(' ')
-        .map(str => chalk.underline.blue(str) + '\n')
-        .join(' ')}\n`
-    )
-  );
   await exec(`rm -r ${removePackagesStr}`);
 
   // Move all packages that we downloaded to the original build folder
@@ -71,14 +54,6 @@ async function downloadRegressionBuild() {
   const movePackageString = INSTALL_PACKAGES.reduce(
     (str, name) => `${str} ${join(regressionBuildPath, 'node_modules', name)}`,
     ''
-  );
-  console.log(
-    chalk.white(
-      `Moving ${movePackageString
-        .split(' ')
-        .map(str => chalk.underline.blue(str) + '\n')
-        .join(' ')} to ${chalk.underline.blue(buildPath)}\n`
-    )
   );
   await exec(`mv ${movePackageString} ${buildPath}`);
 
@@ -93,12 +68,10 @@ async function downloadRegressionBuild() {
   // In v16.5, scheduler is called schedule. We need to make sure we also move
   // this over. Otherwise the code will break.
   if (fs.existsSync(join(regressionBuildPath, 'node_modules', 'schedule'))) {
-    console.log(chalk.white(`Downloading schedule\n`));
     await exec(
       `mv ${join(regressionBuildPath, 'node_modules', 'schedule')} ${buildPath}`
     );
   } else {
-    console.log(chalk.white(`Downloading scheduler\n`));
     await exec(`rm -r ${join(buildPath, 'scheduler')}`);
     await exec(
       `mv ${join(
@@ -113,7 +86,6 @@ async function downloadRegressionBuild() {
 async function main() {
   try {
     if (!version) {
-      console.log(chalk.red('Must specify React version to download'));
       return;
     }
     await downloadRegressionBuild();
@@ -123,7 +95,6 @@ async function main() {
     // We shouldn't remove the regression-build folder unless we're using
     // it to replace the build folder
     if (shouldReplaceBuild) {
-      console.log(chalk.bold.white(`Removing regression build`));
       await exec(`rm -r ${regressionBuildPath}`);
     }
   }

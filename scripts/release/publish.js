@@ -35,9 +35,6 @@ const run = async () => {
     params.skipPackages.forEach(packageName => {
       const index = params.packages.indexOf(packageName);
       if (index < 0) {
-        console.log(
-          theme`Invalid skip package {package ${packageName}} specified.`
-        );
         process.exit(1);
       } else {
         params.packages.splice(index, 1);
@@ -68,7 +65,6 @@ const run = async () => {
         }
       }
       if (failed) {
-        console.log(theme.error`One or more packages failed to publish.`);
         process.exit(1);
       }
     } else {

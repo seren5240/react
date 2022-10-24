@@ -21,8 +21,6 @@ async function main() {
     }
   }
 
-  console.log('Searching `build` directory for unminified errors...\n');
-
   let out;
   try {
     out = execSync(
@@ -54,7 +52,6 @@ async function main() {
       if (newJSON === null) {
         newJSON = Object.assign({}, originalJSON);
       }
-      console.log(`"${nextCode}": "${message}"`);
       newJSON[nextCode] = message;
       nextCode += 1;
     }

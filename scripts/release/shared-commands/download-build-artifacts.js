@@ -15,9 +15,6 @@ const run = async ({build, cwd, releaseChannel}) => {
   );
 
   if (!buildArtifacts) {
-    console.log(
-      theme`{error The specified build (${build}) does not contain any build artifacts.}`
-    );
     process.exit(1);
   }
 

@@ -893,7 +893,6 @@ describe('context legacy', () => {
         class Foo extends React.Component {
           render() {
             count++;
-            console.log('foo ' + count);
             return null;
           }
         }
@@ -922,7 +921,6 @@ describe('context legacy', () => {
           constructor(props) {
             super(props);
             count++;
-            console.log('foo ' + count);
           }
           render() {
             return null;
@@ -953,7 +951,6 @@ describe('context legacy', () => {
           state = {};
           static getDerivedStateFromProps() {
             count++;
-            console.log('foo ' + count);
             return {};
           }
           render() {
@@ -985,7 +982,6 @@ describe('context legacy', () => {
           state = {};
           shouldComponentUpdate() {
             count++;
-            console.log('foo ' + count);
             return {};
           }
           render() {
@@ -1038,7 +1034,6 @@ describe('context legacy', () => {
         );
         inst.setState(() => {
           count++;
-          console.log('foo ' + count);
           return {};
         });
 
@@ -1056,7 +1051,6 @@ describe('context legacy', () => {
         let count = 0;
         function Foo() {
           count++;
-          console.log('foo ' + count);
           return null;
         }
 
@@ -1083,7 +1077,6 @@ describe('context legacy', () => {
         class Foo extends React.Component {
           render() {
             count++;
-            console.log('foo ' + count);
             return null;
           }
         }
@@ -1112,7 +1105,6 @@ describe('context legacy', () => {
           constructor(props) {
             super(props);
             count++;
-            console.log('foo ' + count);
           }
           render() {
             return null;
@@ -1143,7 +1135,6 @@ describe('context legacy', () => {
           state = {};
           static getDerivedStateFromProps() {
             count++;
-            console.log('foo ' + count);
             return {};
           }
           render() {
@@ -1175,7 +1166,6 @@ describe('context legacy', () => {
           state = {};
           shouldComponentUpdate() {
             count++;
-            console.log('foo ' + count);
             return {};
           }
           render() {
@@ -1228,7 +1218,6 @@ describe('context legacy', () => {
         );
         inst.setState(() => {
           count++;
-          console.log('foo ' + count);
           return {};
         });
 
@@ -1246,7 +1235,6 @@ describe('context legacy', () => {
         let count = 0;
         function Foo() {
           count++;
-          console.log('foo ' + count);
           return null;
         }
 

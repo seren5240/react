@@ -60,9 +60,7 @@ app.use(express.static('build'));
 app.use(express.static('public'));
 
 app
-  .listen(PORT, () => {
-    console.log(`Listening at ${PORT}...`);
-  })
+  .listen(PORT, () => {})
   .on('error', function(error) {
     if (error.syscall !== 'listen') {
       throw error;

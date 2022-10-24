@@ -37,8 +37,6 @@ async function checkNPMPermissions() {
     {estimate: 2500}
   );
 
-  console.log('');
-
   if (failedProjects.length) {
     console.error(chalk.red.bold('Insufficient NPM permissions'));
     console.error('');
@@ -63,15 +61,11 @@ function clear() {
 }
 
 async function confirm(message, exitFunction) {
-  console.log('');
-
   const {confirmation} = await inquirer.prompt({
     name: 'confirmation',
     type: 'confirm',
     message,
   });
-
-  console.log('');
 
   if (!confirmation) {
     if (typeof exitFunction === 'function') {

@@ -41,7 +41,6 @@ async function main() {
               resolve();
               break;
             default:
-              console.log('No modifications were made.');
               process.exit(0);
               break;
           }
@@ -58,9 +57,6 @@ async function main() {
     stdio: ['inherit', 'inherit', 'pipe'],
   });
   if (command.status === 1) {
-    console.log(
-      chalk.bold.red('\nreplace-fork script failed with the following error:')
-    );
     console.error(Error(command.stderr));
 
     // If eslint crashes, it may not have successfully fixed all the imports,
@@ -69,16 +65,7 @@ async function main() {
     // but it's only safe to do that if we aren't going to override any previous changes.
     if (!hadUnstagedChanges) {
       spawnSync('git', ['checkout', '.']);
-    } else {
-      console.log(
-        `\n${chalk.yellow.bold(
-          'Unstaged changes were present when `replace-fork` was run.'
-        )} ` +
-          `To cleanup the repository run:\n  ${chalk.bold(
-            'git checkout packages/react-reconciler'
-          )}`
-      );
-    }
+    } else {}
 
     process.exit(1);
   } else {

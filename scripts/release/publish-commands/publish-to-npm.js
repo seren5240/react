@@ -18,31 +18,20 @@ const run = async ({cwd, dry, tags, ci}, packageName, otp) => {
   // But for now the easiest way is just to ask if this is expected.
   const info = await execRead(`npm view ${packageName}@${version}`);
   if (info) {
-    console.log(
-      theme`{package ${packageName}} {version ${version}} has already been published.`
-    );
     if (!ci) {
       await confirm('Is this expected?');
     }
   } else {
-    console.log(theme`{spinnerSuccess ✓} Publishing {package ${packageName}}`);
-
     // Publish the package and tag it.
     if (!dry) {
       if (!ci) {
         await exec(`npm publish --tag=${tags[0]} --otp=${otp}`, {
           cwd: packagePath,
         });
-        console.log(theme.command(`  cd ${packagePath}`));
-        console.log(
-          theme.command(`  npm publish --tag=${tags[0]} --otp=${otp}`)
-        );
       } else {
         await exec(`npm publish --tag=${tags[0]}`, {
           cwd: packagePath,
         });
-        console.log(theme.command(`  cd ${packagePath}`));
-        console.log(theme.command(`  npm publish --tag=${tags[0]}`));
       }
     }
 
@@ -53,20 +42,10 @@ const run = async ({cwd, dry, tags, ci}, packageName, otp) => {
             `npm dist-tag add ${packageName}@${version} ${tags[j]} --otp=${otp}`,
             {cwd: packagePath}
           );
-          console.log(
-            theme.command(
-              `  npm dist-tag add ${packageName}@${version} ${tags[j]} --otp=${otp}`
-            )
-          );
         } else {
           await exec(`npm dist-tag add ${packageName}@${version} ${tags[j]}`, {
             cwd: packagePath,
           });
-          console.log(
-            theme.command(
-              `  npm dist-tag add ${packageName}@${version} ${tags[j]}`
-            )
-          );
         }
       }
     }
@@ -77,16 +56,8 @@ const run = async ({cwd, dry, tags, ci}, packageName, otp) => {
       if (!dry) {
         if (!ci) {
           await exec(`npm dist-tag rm ${packageName} untagged --otp=${otp}`);
-          console.log(
-            theme.command(
-              `  npm dist-tag rm ${packageName} untagged --otp=${otp}`
-            )
-          );
         } else {
           await exec(`npm dist-tag rm ${packageName} untagged`);
-          console.log(
-            theme.command(`  npm dist-tag rm ${packageName} untagged`)
-          );
         }
       }
     }

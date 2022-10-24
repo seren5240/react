@@ -51,8 +51,6 @@ const main = async buildId => {
     cwd: buildPath,
     stdio: 'inherit',
   });
-
-  console.log(`Deployed to https://${alias}.now.sh`);
 };
 
 module.exports = main;

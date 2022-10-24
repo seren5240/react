@@ -36,6 +36,4 @@ module.exports = ({cwd}, isStableRelease) => {
       {path   ${publishPath}}
     `;
   }
-
-  console.log(message.replace(/\n +/g, '\n').trim());
 };

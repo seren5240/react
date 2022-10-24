@@ -20,6 +20,4 @@ module.exports = async ({build}) => {
     You can download this build again by running:
     {path   ${commandPath}} --build={build ${build}}
   `;
-
-  console.log(message.replace(/\n +/g, '\n').trim());
 };

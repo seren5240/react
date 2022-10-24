@@ -77,26 +77,13 @@ const run = async () => {
       'utf-8'
     );
 
-    if (beforeContents === afterContents) {
-      console.log(theme.header`Snapshot test passed.`);
-    } else {
+    if (beforeContents === afterContents) {} else {
       printDiff(
         'scripts/release/snapshot-test.snapshot',
         beforeContents,
         afterContents
       );
-      console.log();
       console.error(theme.error('Snapshot test failed!'));
-      console.log();
-      console.log(
-        'If this failure was expected, please update the contents of the snapshot file:'
-      );
-      console.log(
-        theme`  {command git add} {path scripts/release/snapshot-test.snapshot}`
-      );
-      console.log(
-        theme`  {command git commit -m "Updating release script snapshot file."}`
-      );
       process.exit(1);
     }
   } catch (error) {

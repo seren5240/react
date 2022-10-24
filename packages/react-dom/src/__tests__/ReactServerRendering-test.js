@@ -1154,7 +1154,7 @@ describe('ReactDOMServer', () => {
 
     it('Function properties should not be server rendered for custom elements', () => {
       const output = ReactDOMServer.renderToString(
-        <my-custom-element foo={() => console.log('bar')} />,
+        <my-custom-element foo={() => {}} />,
       );
       expect(output).toBe(`<my-custom-element></my-custom-element>`);
     });

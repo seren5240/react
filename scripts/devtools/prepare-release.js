@@ -34,13 +34,6 @@ async function main() {
   const sha = await getPreviousCommitSha();
   const [shortCommitLog, formattedCommitLog] = await getCommitLog(sha);
 
-  console.log('');
-  console.log(
-    'This release includes the following commits:',
-    chalk.gray(shortCommitLog)
-  );
-  console.log('');
-
   const releaseType = await getReleaseType();
 
   const path = join(ROOT_PATH, PACKAGE_PATHS[0]);
@@ -58,39 +51,18 @@ async function main() {
   updatePackageVersions(previousVersion, nextVersion);
   updateManifestVersions(previousVersion, nextVersion);
 
-  console.log('');
-  console.log(
-    `Packages and manifests have been updated from version ${chalk.bold(
-      previousVersion
-    )} to ${chalk.bold(nextVersion)}`
-  );
-  console.log('');
-
   await commitPendingChanges(previousVersion, nextVersion);
 
   printFinalInstructions();
 }
 
 async function commitPendingChanges(previousVersion, nextVersion) {
-  console.log('');
-  console.log('Committing revision and changelog.');
-  console.log(chalk.dim('  git add .'));
-  console.log(
-    chalk.dim(
-      `  git commit -m "React DevTools ${previousVersion} -> ${nextVersion}"`
-    )
-  );
-
   if (!DRY_RUN) {
     await exec(`
       git add .
       git commit -m "React DevTools ${previousVersion} -> ${nextVersion}"
     `);
   }
-
-  console.log('');
-  console.log(`Please push this commit before continuing:`);
-  console.log(`  ${chalk.bold.green('git push')}`);
 
   await confirmContinue();
 }
@@ -195,29 +167,9 @@ async function getReleaseType() {
 function printFinalInstructions() {
   const buildAndTestcriptPath = join(__dirname, 'build-and-test.js');
   const pathToPrint = relative(process.cwd(), buildAndTestcriptPath);
-
-  console.log('');
-  console.log('Continue by running the build-and-test script:');
-  console.log(chalk.bold.green('  ' + pathToPrint));
 }
 
 async function reviewChangelogPrompt() {
-  console.log('');
-  console.log(
-    'The changelog has been updated with commits since the previous release:'
-  );
-  console.log(`  ${chalk.bold(CHANGELOG_PATH)}`);
-  console.log('');
-  console.log('Please review the new changelog text for the following:');
-  console.log('  1. Organize the list into Features vs Bugfixes');
-  console.log('  1. Filter out any non-user-visible changes (e.g. typo fixes)');
-  console.log('  1. Combine related PRs into a single bullet list.');
-  console.log(
-    '  1. Replacing the "USERNAME" placeholder text with the GitHub username(s)'
-  );
-  console.log('');
-  console.log(`  ${chalk.bold.green(`open ${CHANGELOG_PATH}`)}`);
-
   await confirmContinue();
 }
 
@@ -236,8 +188,6 @@ function updateChangelog(nextVersion, commitLog) {
 
   const newChangelog = `${beginning}${RELEASE_SCRIPT_TOKEN}\n\n${header}\n${commitLog}${end}`;
 
-  console.log(chalk.dim('  Updating changelog: ' + CHANGELOG_PATH));
-
   if (!DRY_RUN) {
     writeFileSync(path, newChangelog);
   }
@@ -252,8 +202,6 @@ function updateManifestVersions(previousVersion, nextVersion) {
     if (json.hasOwnProperty('version_name')) {
       json.version_name = nextVersion;
     }
-
-    console.log(chalk.dim('  Updating manifest JSON: ' + partialPath));
 
     if (!DRY_RUN) {
       writeJsonSync(path, json, {spaces: 2});
@@ -274,8 +222,6 @@ function updatePackageVersions(previousVersion, nextVersion) {
         json.dependencies[key] = version.replace(previousVersion, nextVersion);
       }
     }
-
-    console.log(chalk.dim('  Updating package JSON: ' + partialPath));
 
     if (!DRY_RUN) {
       writeJsonSync(path, json, {spaces: 2});

@@ -30,7 +30,6 @@ function initDependencies() {
   DEPENDENCIES.forEach(([from, to]) => {
     const fromPath = join(__dirname, BUILD_DIRECTORY, from);
     const toPath = join(__dirname, DEPENDENCIES_DIRECTORY, to);
-    console.log(`Copying ${fromPath} => ${toPath}`);
     copyFileSync(fromPath, toPath);
   });
 }
@@ -69,9 +68,7 @@ function initServer() {
   };
 
   const server = http.createServer(requestListener);
-  server.listen(port, host, () => {
-    console.log(`Server is running on http://${host}:${port}`);
-  });
+  server.listen(port, host, () => {});
 }
 
 initDependencies();
